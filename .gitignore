@@ -1,0 +1,22 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+src/frontend/dist
+src/frontend/tmp
+
+# dependencies
+src/frontend/node_modules
+src/frontend/bower_components
+
+# built files in gae folder
+gae/dist
+gae/doughflow.py
+gae/doughflow.pyc
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage/*
+/libpeerconnection.log
+npm-debug.log*
+testem.log
