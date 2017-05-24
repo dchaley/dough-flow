@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import moment from 'moment';
+import {formatMoney} from 'dough-flow/helpers/format-money';
 
 const HIT_RADIUS = 15;
 const DAYS_AXIS_STEP = 5;
@@ -107,6 +108,9 @@ export default Ember.Component.extend({
 
             ticks: {
               min: 0,
+              callback: function(value) {
+                return formatMoney(value, {decimalPlaces: 0});
+              },
             },
           }
         ],
