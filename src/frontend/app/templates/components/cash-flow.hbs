@@ -1,0 +1,15 @@
+{{#paper-item class="md-2-line" as |controls|}}
+  {{paper-icon (if isDeposit "attach-money" "money-off")}}
+  <div class="md-list-item-text">
+    <h3>{{cashFlow.title}}</h3>
+    <p>
+      {{format-money (abs cashFlow.amount)}} 
+      {{if isWithdrawal "withdrawn" "deposited"}}
+      {{cashFlow.frequency}} {{interval}}
+    </p>
+    {{#controls.button secondary=true iconButton=true}}
+      {{paper-icon "mode-edit"}}
+    {{/controls.button}}
+  </div>
+{{/paper-item}}
+

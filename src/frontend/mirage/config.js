@@ -11,7 +11,7 @@ export default function() {
           title: 'Paycheck',
           amount: 100,
           frequency: 'monthly',
-          frequencyOffset: '15',
+          'frequency-offset': '15',
         }
       }, {
         type: 'cashflow',
@@ -20,7 +20,7 @@ export default function() {
           title: 'Paycheck',
           amount: 100,
           frequency: 'monthly',
-          frequencyOffset: '-1',
+          'frequency-offset': '-1',
         }
       }, {
         type: 'cashflow',
@@ -29,7 +29,7 @@ export default function() {
           title: 'Amex',
           amount: -120,
           frequency: 'monthly',
-          frequencyOffset: '-1',
+          'frequency-offset': '-3',
         }
       }, {
         type: 'cashflow',
