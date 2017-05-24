@@ -23,6 +23,18 @@ module.exports = function(environment) {
     }
   };
 
+  // allow fetching fonts from google fonts -- the internet told me to do this
+  // http://miguelcobain.github.io/ember-paper/release-1/#/ "Content Security Policy"
+  ENV.contentSecurityPolicy = {
+  'default-src': "'none'",
+  'script-src': "'self' 'unsafe-inline'",
+  'style-src': "'self' 'unsafe-inline' https://fonts.googleapis.com",
+  'font-src': "'self' fonts.gstatic.com",
+  'connect-src': "'self'",
+  'img-src': "'self' data:",
+  'media-src': "'self'"
+};
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;

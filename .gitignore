@@ -20,3 +20,5 @@ gae/doughflow.pyc
 /libpeerconnection.log
 npm-debug.log*
 testem.log
+.ctrlproot
+.*.swp
