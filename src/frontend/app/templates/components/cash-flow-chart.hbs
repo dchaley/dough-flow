@@ -1,0 +1,11 @@
+
+Start date: {{moment-format startDate 'MM-DD-YYYY'}}
+Duration: {{days}}
+End date: {{moment-format endDate 'MM-DD-YYYY'}}
+Starting balance: {{format-money startingBalance}}
+
+{{ember-chart
+    type="DualFillLine"
+    data=chartjsData
+    options=chartjsOptions
+    }}
