@@ -21,3 +21,4 @@ gae/doughflow.pyc
 npm-debug.log*
 testem.log
 .ctrlproot
+.*.swp
