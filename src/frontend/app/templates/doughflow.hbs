@@ -1,4 +1,10 @@
 
 <div class="layout-column layout-margin">
     {{cash-flow-chart startingBalance=100}}
+
+    {{#paper-list}}
+        {{#each model as |flow|}}
+            {{cash-flow cashflow=flow}}
+        {{/each}}
+    {{/paper-list}}
 </div>
