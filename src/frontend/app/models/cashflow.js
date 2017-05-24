@@ -2,10 +2,12 @@ import DS from 'ember-data';
 
 export default DS.Model.extend({
   title: DS.attr(),
-  owner: DS.attr(),
-  city: DS.attr(),
-  type: DS.attr(),
-  image: DS.attr(),
-  bedrooms: DS.attr(),
-  description: DS.attr()
+  amount: DS.attr(),
+
+  // once, weekly, monthly
+  frequency: DS.attr(),
+  // for repeated flows, numeric offset into interval (or offset from end)
+  frequency_offset: DS.attr(),
+  // date on which one-time events occur
+  date: DS.attr(),
 });
