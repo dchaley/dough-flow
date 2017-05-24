@@ -7,7 +7,7 @@ export default DS.Model.extend({
   // once, weekly, monthly
   frequency: DS.attr(),
   // for repeated flows, numeric offset into interval (or offset from end)
-  frequency_offset: DS.attr(),
+  frequencyOffset: DS.attr(),
   // date on which one-time events occur
   date: DS.attr(),
 });
