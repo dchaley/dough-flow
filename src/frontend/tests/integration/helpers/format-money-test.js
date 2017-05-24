@@ -23,3 +23,11 @@ test('it handles negative numbers', function(assert) {
   assert.equal(this.$().text().trim(), '-$1,234.00');
 });
 
+test('it handles zero', function(assert) {
+  this.set('inputValue', '0');
+
+  this.render(hbs`{{format-money inputValue}}`);
+
+  assert.equal(this.$().text().trim(), '$0.00');
+});
+
