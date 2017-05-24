@@ -31,3 +31,18 @@ test('it handles zero', function(assert) {
   assert.equal(this.$().text().trim(), '$0.00');
 });
 
+test('it handles different decimal points', function(assert) {
+  this.set('inputValue', '123.01');
+  this.render(hbs`{{format-money inputValue}}`);
+  assert.equal(this.$().text().trim(), '$123.01');
+  
+  this.set('inputValue', '123.06');
+  this.render(hbs`{{format-money inputValue decimalPlaces=1}}`);
+  assert.equal(this.$().text().trim(), '$123.1');
+  
+  this.set('inputValue', '123.01');
+  this.render(hbs`{{format-money inputValue decimalPlaces=0}}`);
+  assert.equal(this.$().text().trim(), '$123');
+});
+
+
