@@ -10,7 +10,8 @@ export function initialize(/* application */) {
   Chart.controllers.DualFillLine = Chart.controllers.line.extend({
       update: function () {
           // get the min and max values
-          var min = Math.min.apply(null, this.chart.data.datasets[0].data);
+          // if the min is non-zero, force a zero min
+          var min = Math.min.apply(null, [...this.chart.data.datasets[0].data, 0]);
           var max = Math.max.apply(null, this.chart.data.datasets[0].data);
           var yScale = this.getScaleForId(this.getDataset().yAxisID);
 
