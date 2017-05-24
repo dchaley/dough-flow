@@ -1,0 +1,6 @@
+{
+  "name": "dough-flow",
+  "dependencies": {
+    "chartjs": "2.5.0"
+  }
+}
