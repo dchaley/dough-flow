@@ -1,3 +1,6 @@
+
+import moment from 'moment';
+
 export default function() {
   this.namespace = '/api';
 
@@ -41,6 +44,36 @@ export default function() {
           date: '2017-06-02',
         }
       }]
+    };
+  });
+
+  this.get('/daily-balances', function() {
+    var points = [];
+    var startDate = new Date('2017-05-24');
+
+    var seed = 1;
+    var myRandom = function() {
+      var x = Math.sin(seed++) * 10000;
+      return x - Math.floor(x);
+    };
+
+    [...Array(90).keys()].map((offset) => {
+      var date = new Date();
+      date.setDate(startDate.getDate() + offset);
+      date = moment(date);
+
+      points.push({
+        type: 'daily-balance',
+        id: date.format('YYYYMMDD'),
+        attributes: {
+          date: date.format('YYYY-MM-DD'),
+          balance: Math.floor(myRandom() * (500 + 500)) - 500,
+        },
+      });
+    });
+
+    return {
+      data: points
     };
   });
 }
