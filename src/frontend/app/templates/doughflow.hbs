@@ -1,9 +1,9 @@
 
 <div class="layout-column layout-margin">
-    {{cash-flow-chart startingBalance=100}}
+    {{cash-flow-chart startingBalance=100 dailyBalances=model.dailyBalances}}
 
     {{#paper-list}}
-        {{#each model as |flow|}}
+        {{#each model.cashflows as |flow|}}
             {{cash-flow cashFlow=flow}}
         {{/each}}
     {{/paper-list}}
