@@ -23,6 +23,13 @@ module.exports = function(environment) {
     }
   };
 
+  ENV.firebase = {
+    apiKey: 'AIzaSyABT94xsHT7c_qYhDDyT4kEAYfXtm-s0iA',
+    authDomain: 'dough-flow.firebaseapp.com',
+    databaseURL: 'ws://localhost.firebaseio.test:5555',
+    storageBucket: 'dough-flow.appspot.com.appspot.com',
+  };
+
   // allow fetching fonts from google fonts -- the internet told me to do this
   // http://miguelcobain.github.io/ember-paper/release-1/#/ "Content Security Policy"
   ENV.contentSecurityPolicy = {
@@ -55,13 +62,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
-  }
-
-  if (environment === 'localgae') {
-    ENV['ember-cli-mirage'] = {
-      enabled: false
-    }
+    ENV.firebase.databaseURL = 'https://dough-flow.firebaseio.com';
   }
 
   return ENV;
