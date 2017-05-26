@@ -5,8 +5,8 @@ src/frontend/dist
 src/frontend/tmp
 
 # dependencies
-src/frontend/node_modules
-src/frontend/bower_components
+node_modules
+bower_components
 
 # built files in gae folder
 gae/dist
