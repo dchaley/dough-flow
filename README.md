@@ -3,6 +3,7 @@
 > ***DoughFlow***, n
 >
 > 1. the state of flow while baking;
+> 1. a cheesy cash-flow pun;
 > 1. a cash flow web app.
 
 # Architecture
@@ -27,6 +28,8 @@ The EmberJS files are served as static files (html & assets).
 
 # Development
 
+For convenience, let `DOUGH_FLOW=/home/me/my_dough_flow_checkout` (e.g., add to shell rc, you need `export` in zsh)
+
 ## Requirements
 
 * GAE project with GAE app (probably need billing set up)
@@ -34,6 +37,7 @@ The EmberJS files are served as static files (html & assets).
 * NodeJS (I used 7.10 with nvm)
 * EmberJS (I used most recent as of 2017-05-26)
 * Firebase project associated with your Google Cloud project
+* Firebase SDK (`npm install -g firebase-tools`)
 * `npm install -g firebase-server`
 
 ## Building client (EmberJS)
@@ -65,31 +69,57 @@ ember build --environment=production
 
 TODO
 
+### Set up localhost route
+
+Edit `/etc/hosts` (or similar) to map:
+
+`127.0.0.1      localhost.firebaseio.test`
+
+Firebase likes DB URLs being in a specific format, so you can't just use local ip or local host as the `databaseURL`.
+
 ## Running
 
 ### Local Firebase server
 
 From the project root, 
 
-```
-./start-local-firebase.sh
+```bash
+bin/start-doughflow-firebase
+# or for verbose debug: 
+DEBUG=* bin/start-doughflow-firebase
 ```
 
-This will start a local Firebase-like server loaded with data from [`test/firebase.json`](test/firebase.json).
+(Note, you need to have `DOUGH_FLOW` in your environment for this script to work.)
+
+> (NB: you can add `$DOUGH_FLOW/bin` to your shell's path for convenience)
+
+This will start a local Firebase-like server loaded with data from [`test/firebase.json`](test/firebase.json), available on `localhost.firebaseio.test` port `5555`. The Ember app is set up to use this hostname when `environment=development`.
 
 ### Web client
 
 Start the local Firebase server (see above). Then, from `src/frontend`,
 
-```
+```bash
 ember server
 ```
 
 This will start a live-reloading web server listening on port 4200. Go to [http://localhost:4200](localhost:4200) to see the app.
 
-### Cloud functions
+### Cloud functions emulator
 
-TODO: figure out how to run cloud functions locally, or do we need to deploy them ???
+Not sure if we actually need this. We'll need cloud functions for delicate/sensitive server logic that clients shouldn't control. For now we don't have anything like that. But it was a pain to figure out. So here are some notes for posterity.
+
+* Set up some functions in `src/firebase/functions`, use samples, like helloWorld, should be `src/firebase/functions/index.js`.
+
+* Set up auth in `src/firebase/functions/config.json` file, for local you probably don't need actual credentials.
+
+* Run the local function emulator:
+
+From the `src/firebase/functions` directory:
+
+```bash
+export CLOUD_RUNTIME_CONFIG=`pwd`/config.json && firebase serve --only functions
+```
 
 ## Deploying to production
 

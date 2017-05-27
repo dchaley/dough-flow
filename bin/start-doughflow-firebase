@@ -6,5 +6,5 @@ else
   PORT=5555
 fi
 
-firebase-server -p $PORT -f test/firebase.json
+firebase-server -p $PORT -f $DOUGH_FLOW/test/firebase.json -s hi
 
