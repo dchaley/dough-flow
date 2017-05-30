@@ -1,26 +1,32 @@
 {
-  "cashflows": {
+  "cashFlows": {
     "1": {
       "title": "Paycheck",
       "amount": 100,
       "frequency": "monthly",
-      "frequency-offset": "15"
+      "frequencyOffset": "15"
     },
     "2": {
       "title": "Paycheck",
       "amount": 100,
       "frequency": "monthly",
-      "frequency-offset": "-1"
+      "frequencyOffset": "-1"
     },
     "3": {
       "title": "Amex",
       "amount": -120,
       "frequency": "monthly",
-      "frequency-offset": "-3"
+      "frequencyOffset": "-3"
     },
     "4": {
+      "title": "BofA",
+      "amount": -50,
+      "frequency": "monthly",
+      "frequencyOffset": "-3"
+    },
+    "5": {
       "title": "Property taxes",
-      "amount": -100,
+      "amount": -300,
       "frequency": "once",
       "date": "2017-06-02"
     }

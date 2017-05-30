@@ -1,44 +1,58 @@
 import Ember from 'ember';
 import moment from 'moment';
 import {formatMoney} from 'dough-flow/helpers/format-money';
+import BalancesUtil from '../utils/daily-balance';
 
 const HIT_RADIUS = 15;
 const DAYS_AXIS_STEP = 5;
 
 export default Ember.Component.extend({
 
+  balancesUtil: BalancesUtil.create(),
+
   init() {
     this._super(...arguments);
 
     this.startDate = moment();
-    this.days = 21;
+    this.days = 150;
   },
+
+  endDate: Ember.computed('startDate', 'days', function() { 
+    return this.get('startDate').clone().add(this.get('days'), 'days'); 
+  }), 
   
-  endDate: Ember.computed('startDate', 'days', function() {
-    return this.get('startDate').clone().add(this.get('days'), 'days');
-  }),
-
-  dateRange: function*(startDate, endDate) {
-    for (var d = startDate.clone(); d.isSameOrBefore(endDate); d.add(1, 'days')) {
-      yield d.clone();
-    }
-  },
-
   cashPoints: Ember.computed('dailyBalances', 'startingBalance' , function() {
-    var dailyBalances = this.get('dailyBalances').toArray();
+    var dailyBalances = this.get('balancesUtil')
+                          .reifyCashFlow(this.get('cashFlows'),
+                                         this.get('startDate'),
+                                         this.get('endDate')
+                                        );
     var startingBalance = this.get('startingBalance');
 
     var values = [];
     var labels = [];
+    var events = [];
 
-    dailyBalances.forEach((b) => {
-      values.push(b.get('balance') + startingBalance);
-      labels.push(b.get('date'));
+    // sum the daily balances with starting balance,
+    // but skip entries that don't and won't change
+    dailyBalances.forEach((b, index) => {
+      var prev = dailyBalances[index-1];
+      var next = dailyBalances[index+1];
+
+      if (!prev || prev.balance != b.balance
+          || !next || next.balance != b.balance) {
+        values.push(b.balance + startingBalance);
+        labels.push(b.date);
+        events.push(b.events);
+      }
     });
+
+    // TODO: remove inner duplicates, don't show repeated points in the middle
 
     return {
       values: values,
       labels: labels,
+      events: events,
     };
   }),
 
@@ -52,19 +66,42 @@ export default Ember.Component.extend({
       datasets: [{
         label: 'Cash',
         data: cashPoints.values,
-        borderWidth: 1,
+        borderWidth: 3,
         yAxisID: 'y-axis-0',
+        lineTension: 0,
+        //fill: false,
       }],
       labels: cashPoints.labels,
       yLabels: [],
     };
   }),
 
+  computeFooters(cashPoints) {
+    return cashPoints.events.map((dayEvents) => {
+      if (dayEvents.length == 0) {
+        return;
+      }
+
+      return 'Events: ' + dayEvents.map((e) => {
+        return e.get('title')
+            + ' ('
+            + formatMoney(e.get('amount'),
+                          {decimalPlaces:0})
+            + ')';
+      }).join(', ');
+    });
+  },
+
   /**
    * Translates our cash stream models into a chartjs options block.
    */
   chartjsOptions: Ember.computed('cashPoints', function() {
-    var minBalance = Math.min(...this.get('cashPoints').values, 0);
+    var cashPoints = this.get('cashPoints');
+    var minBalance = Math.min(...cashPoints.values, 0);
+
+    var footers = this.computeFooters(cashPoints);
+
+    // TODO: pad min & max balances
 
     return {
       elements: {
@@ -118,6 +155,12 @@ export default Ember.Component.extend({
           label: function(item) {
             return formatMoney(item.yLabel, {decimalPlaces: 0});
           },
+          footer: function(items) {
+            var events = items.map((item) => footers[item.index]);
+            //events = events.reduce((acc, p) => [...acc,...p], []);
+
+            return events.join('');
+          }
         },
       },
     };
