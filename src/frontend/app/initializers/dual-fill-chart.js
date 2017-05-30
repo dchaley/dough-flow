@@ -28,6 +28,7 @@ export function initialize(/* application */) {
           gradient.addColorStop(ratio, 'rgba(75,192,75,0.4)');
           gradient.addColorStop(ratio, 'rgba(192,75,75,0.4)');
           gradient.addColorStop(1, 'rgba(192,75,75,0.4)');
+          this.chart.data.datasets[0].borderColor = gradient;
           this.chart.data.datasets[0].backgroundColor = gradient;
 
           return Chart.controllers.line.prototype.update.apply(this, arguments);
