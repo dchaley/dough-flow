@@ -34,11 +34,15 @@ For convenience, let `DOUGH_FLOW=/home/me/my_dough_flow_checkout` (e.g., add to 
 
 * GAE project with GAE app (probably need billing set up)
 * Google Cloud SDK
+  * https://cloud.google.com/sdk/downloads
 * NodeJS (I used 7.10 with nvm)
+  * `brew install nvm; nvm install v7.10`
 * EmberJS (I used most recent as of 2017-05-26)
-* Firebase project associated with your Google Cloud project
-* Firebase SDK (`npm install -g firebase-tools`)
-* `npm install -g firebase-server`
+  * `npm install -g ember-cli@2.11`
+* Firebase
+  * Firebase project associated with your Google Cloud project
+  * Firebase Server & SDK
+    * `npm install -g firebase-tools; npm install -g firebase-server`
 
 ## Building client (EmberJS)
 
